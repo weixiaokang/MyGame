@@ -19,6 +19,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
     private final static String FIRST_FLAG = "O";
     private final static String SECOND_FLAG = "X";
     private final static String START_GAME = "000000000";
+    private final static String TEXT = "hello github";
 
     private int level, turn, music;
     private boolean canClick;
