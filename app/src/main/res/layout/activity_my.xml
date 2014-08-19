@@ -1,0 +1,25 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context=".MyActivity">
+
+    <TextView
+        android:text="@string/game_name"
+        style="@style/BtnStyle" />
+    <Button
+        android:id="@+id/ctn_button"
+        android:text="@string/ctn"
+        style="@style/BtnStyle" />
+    <Button
+        android:id="@+id/new_game_button"
+        android:text="@string/new_game"
+        style="@style/BtnStyle" />
+    <Button
+        android:id="@+id/exit_button"
+        android:text="@string/exit"
+        style="@style/BtnStyle" />
+</LinearLayout>
