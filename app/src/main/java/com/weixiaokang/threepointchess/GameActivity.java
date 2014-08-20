@@ -1,6 +1,7 @@
 package com.weixiaokang.threepointchess;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -204,7 +205,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
             }
         }
         if (success == 1) {
-            Log.i(TAG, "you success");
+
         } else if (success == 2){
             Log.i(TAG, "you lose");
         } else if (nousedCount == 0) {
@@ -339,7 +340,8 @@ public class GameActivity extends Activity implements View.OnClickListener{
                 setDate();
                 break;
             case R.id.botton_setting:
-
+                new SettingDialog().show(getFragmentManager(), "setting");
+                setDate();
                 break;
             case R.id.main_menu:
                 finish();
