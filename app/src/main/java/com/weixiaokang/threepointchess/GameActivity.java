@@ -205,11 +205,14 @@ public class GameActivity extends Activity implements View.OnClickListener{
             }
         }
         if (success == 1) {
-
+            new GameEndDialog(this, R.string.success).showDialog();
+            setDate();
         } else if (success == 2){
-            Log.i(TAG, "you lose");
+            new GameEndDialog(this, R.string.lose).showDialog();
+            setDate();
         } else if (nousedCount == 0) {
-            Log.i(TAG, "dog fall");
+            new GameEndDialog(this, R.string.dogfall).showDialog();
+            setDate();
         }
     }
 

@@ -25,4 +25,7 @@
     <string name="botton_setting">设置</string>
     <string name="restart">重置</string>
     <string name="hint">提示</string>
+    <string name="success">恭喜，你已经获得胜利</string>
+    <string name="lose">你输了，再接再厉！</string>
+    <string name="dogfall">是平局，不给力啊</string>
 </resources>
