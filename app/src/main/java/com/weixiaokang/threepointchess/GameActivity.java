@@ -23,7 +23,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
     private final static String TEXT = "hello";
 
     private int level, turn, music;
-    private boolean canClick;
+    private boolean canClick, firstStep;
     private Button btn[] = new Button[9];
     private Button resetButton, settingButton, menuButton;
     private SharedPreferences sharedPreferences;
@@ -52,6 +52,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
      * reset the view when game over and click the reset button;
      */
     private void setDate() {
+        firstStep = true;
         arrayList = new LinkedList<Integer>();
         for (int i = 0; i < 9; i++) {
             arrayList.add(i);
@@ -69,13 +70,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
             canClick = false;
         }
         if (turn == 1) {
-            android.os.Handler handler = new android.os.Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    randomSelect(arrayList);
-                }
-            }, 2000);
+            aiMakeChoice();
         }
     }
     /**
@@ -113,10 +108,10 @@ public class GameActivity extends Activity implements View.OnClickListener{
      * the view feedback;
      * @param button the button you click
      * @param i the number of button you click
-     * @param turn the turn you set in settings
      */
-    private void setOnClick(Button button, int i, int turn) {
+    private void setOnClick(Button button, int i) {
         if (canClick) {
+            firstStep = false;
             if (!hasSelected(button)) {
                 if (turn == 0) {
                     button.setText(FIRST_FLAG);
@@ -129,13 +124,9 @@ public class GameActivity extends Activity implements View.OnClickListener{
                 }
 
                 checkIfSuccess();
-                android.os.Handler handler = new android.os.Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        randomSelect(arrayList);
-                    }
-                }, 1000);
+                if (!firstStep) {
+                    aiMakeChoice();
+                }
                 checkIfSuccess();
             }
         }
@@ -145,6 +136,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
      * check if the game should be over
      */
     private void checkIfSuccess() {
+        if (DEBUG) { Log.i(TAG, "-->check:"+game); }
         char me, ai;
         if (turn == 0) {
             me = '1';
@@ -195,13 +187,13 @@ public class GameActivity extends Activity implements View.OnClickListener{
         }
         if (game.charAt(2) == ai
                 &&game.charAt(4) == ai
-                &&game.charAt(8) == ai) {
+                &&game.charAt(6) == ai) {
             success = 2;
         }
-        int nousedCount = 0;
+        int noUsedCount = 0;
         for (int i = 0; i < 9; i++) {
             if (game.charAt(i) == '0') {
-                nousedCount++;
+                noUsedCount++;
             }
         }
         if (success == 1) {
@@ -210,7 +202,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
         } else if (success == 2){
             new GameEndDialog(this, R.string.lose).showDialog();
             setDate();
-        } else if (nousedCount == 0) {
+        } else if (noUsedCount == 0) {
             new GameEndDialog(this, R.string.dogfall).showDialog();
             setDate();
         }
@@ -248,7 +240,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
      * @return selected return false, not selected return ture;
      */
     private boolean hasSelected(Button button) {
-        if (button.getText().equals("")) {
+        if (button.getText().toString().equals("")) {
            return false;
         } else {
             return true;
@@ -268,16 +260,27 @@ public class GameActivity extends Activity implements View.OnClickListener{
         } else if (a.size() != 0) {
             if (turn == 0) {
                 btn[a.get(i)].setText(SECOND_FLAG);
-                game.setCharAt(i, '2');
+                game.setCharAt(a.get(i), '2');
                 canClick = true;
                 a.remove(i);
             } else {
                 btn[a.get(i)].setText(FIRST_FLAG);
-                game.setCharAt(i, '1');
+                game.setCharAt(a.get(i), '1');
                 canClick = true;
                 a.remove(i);
             }
+            if (DEBUG) { Log.i(TAG, ""+game.charAt(i)); }
         }
+    }
+
+    private void aiMakeChoice() {
+        android.os.Handler handler = new android.os.Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                randomSelect(arrayList);
+            }
+        }, 1000);
     }
     @Override
     protected void onPause() {
@@ -313,31 +316,31 @@ public class GameActivity extends Activity implements View.OnClickListener{
         Button button = (Button) v;
         switch (button.getId()) {
             case R.id.button0:
-                setOnClick(button, 0, turn);
+                setOnClick(button, 0);
                 break;
             case R.id.button1:
-                setOnClick(button, 1, turn);
+                setOnClick(button, 1);
                 break;
             case R.id.button2:
-                setOnClick(button, 2, turn);
+                setOnClick(button, 2);
                 break;
             case R.id.button3:
-                setOnClick(button, 3, turn);
+                setOnClick(button, 3);
                 break;
             case R.id.button4:
-                setOnClick(button, 4, turn);
+                setOnClick(button, 4);
                 break;
             case R.id.button5:
-                setOnClick(button, 5, turn);
+                setOnClick(button, 5);
                 break;
             case R.id.button6:
-                setOnClick(button, 6, turn);
+                setOnClick(button, 6);
                 break;
             case R.id.button7:
-                setOnClick(button, 7, turn);
+                setOnClick(button, 7);
                 break;
             case R.id.button8:
-                setOnClick(button, 8, turn);
+                setOnClick(button, 8);
                 break;
             case R.id.restart:
                 setDate();
