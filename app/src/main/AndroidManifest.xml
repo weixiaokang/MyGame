@@ -22,6 +22,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:name=".StartActivity"
             android:label="@string/title_activity_start" >
             <intent-filter>
